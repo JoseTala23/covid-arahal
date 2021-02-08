@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <title>Covid Arahal</title>
+</head>
+
+<body>                
+   
+     <div class="container">                          
+        
+        <div class="image-pueblo">
+            <h1 class="header">COVID-19 <strong>Arahal</strong></h1>
+            <img src="C:\wamp\www\informacionCOVID19\banderaArahal.png"/>
+        </div>
+
+        <div class="infoHeader">
+            <h6 id="dateOfUpdate" class="headerDetails"></h6>
+            <br>
+            <h6 class="headerDetails">Población total: <strong id="poblacion"></strong></h6>
+            <h6 class="headerDetails">Tasa PDIA 14 días: <strong id="tasa14"></strong></h6>
+        </div>
+        <div class="row card-content">            
+            <div class="col-md-4">
+                <div class="justify-content-center">
+                    <div class="card-detail">
+                        <h5 class="dato">Casos confirmados</h5>
+                        <h5 id="confirmados"></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" >
+                <div class="justify-content-center">
+                    <div class="card-detail">
+                        <h5 class="dato">Total curados</h5>
+                        <h5 id="curados"></h5>
+                        <div id="spinner">
+                            <div class="lds-dual-ring">&nbsp</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" >
+                <div class="justify-content-center">
+                    <div class="card-detail" >
+                        <h5 class="dato">Total muertes</h5>
+                        <h5 id="fallecidos"></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row-data">
+            <ul>
+                <li>Total confirmados últimos 14 días: <strong><span id="confirmados14"></span></strong></li>
+                <li>Total confirmados últimos 7 días: &nbsp; <strong><span id="confirmados7"></strong></span> </li>
+            </ul>
+        </div>
+
+        <hr>      
+        
+        <div class="copyright-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="copyright-text text-left">
+                            <p>Desarrollado por <strong><a href="https://www.instagram.com/jmanuel_talaveron">José Manuel Talaverón</a></strong></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="footer-menus text-right">
+                            <ul>
+                                <li><a href="https://www.juntadeandalucia.es/">Los datos mostrados provienen de <span style="font-style: italic;">Junta de Andalucía</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+</body>
+
+<script>
+
+
+$(document).ready(function() {
+
+    var now = new Date();
+
+    $('#dateOfUpdate').text("Actualizado a " + now.toLocaleDateString());
+
+});
+
+
+let url;
+let obj;
+let dataArahal;
+
+var poblacion = document.getElementById("poblacion");
+var confirmados = document.getElementById("confirmados");
+var confirmadosPDIA14 = document.getElementById("confirmados14");
+var tasaPDIA14 = document.getElementById("tasa14");
+var confirmadosPDIA7 = document.getElementById("confirmados7");
+var totalConfirmados = document.getElementById("totalconfirmados");
+var curados = document.getElementById("curados");
+var fallecidos = document.getElementById("fallecidos");
+
+async function fetchDataAsync() {    
+    const response = await fetch('https://www.juntadeandalucia.es/institutodeestadisticaycartografia/intranet/admin/rest/v1.0/consulta/38676?D_TERRITORIO_0=3036');
+    dataArahal = await response.json();
+    //await accionAsincrona();
+
+    document.getElementById("spinner").style.display="none";
+
+    return dataArahal;
+}
+
+const accionAsincrona = async () => {
+    return new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve();
+    }, 10);
+  });   
+}
+
+function cargarElementos(data) {
+    document.getElementById("poblacion").innerHTML = poblacion.innerText + " " + data["data"][0][1].format
+    document.getElementById("confirmados").innerHTML = confirmados.innerText + " " + data["data"][0][2].format
+    document.getElementById("confirmados14").innerHTML = confirmadosPDIA14.innerText + " " + data["data"][0][3].format
+    document.getElementById("tasa14").innerHTML = tasaPDIA14.innerText + " " + data["data"][0][4].format
+    document.getElementById("confirmados7").innerHTML = confirmadosPDIA7.innerText + " " + data["data"][0][5].format
+    //document.getElementById("totalconfirmados").innerHTML = totalConfirmados.innerText + " " + data["data"][0][6].format
+    document.getElementById("curados").innerHTML = curados.innerText + " " + data["data"][0][7].format
+    document.getElementById("fallecidos").innerHTML = fallecidos.innerText + " " + data["data"][0][8].format
+}
+
+fetchDataAsync()
+    .then(data => cargarElementos(data))
+    .then($(".loader").fadeOut("slow"));
+
+
+</script>
+
+</html>
+

@@ -1,0 +1,107 @@
+body {
+    background-color: rgb(132, 174, 230);
+}
+
+.image-pueblo {
+    text-align: center;      
+}
+.image-pueblo img{
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+    height: 100px;
+    display: block; 
+    margin-top: 30px;    
+}
+
+.headerDetails{    
+    text-align: center;
+}
+
+.card-detail h5{
+    text-align: center;
+}
+
+.card-content{
+    padding-top: 80px;
+    padding-bottom: 50px;
+}
+
+.infoHeader{
+    padding-top: 30px;
+}
+
+.dato{
+    color: #0645b1;
+}
+
+
+.row-data{
+    text-align: center; 
+    padding-bottom: 160px;
+}
+
+.row-data ul{
+    list-style: none;
+    margin:0px ;  
+}
+
+#row-data ul li{
+    float: left;
+    margin-right: 20px;  
+     
+}
+
+.card-detail {
+    background: #fff;
+    width: 80%;
+    border-radius: 10px;
+    border: 1px solid #111;    
+    padding: 4px 1.5rem 1.5rem;
+    text-align: center;
+    box-shadow: 3px 3px #9ad4f1;
+    margin:20px auto;
+}
+
+.justify-content-center{
+    text-align: center;
+}
+
+.footer-menus ul {
+    list-style: none;
+    margin:0px ;  
+}
+
+a { color: #000000; }
+
+
+#spinner {
+    text-align: center;
+}
+
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid black;
+    border-color: black transparent black transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
